@@ -1,27 +1,24 @@
 <template>
   <div id="app" class="container">
       <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-12">
           <h1><strong>Footylights</strong></h1>
-        </div>
-        <div class="col-sm-1">
-          <button type="button" class="btn btn-dark text-right"><font-awesome-icon :icon="['far', 'envelope']"/></button>
         </div>
       </div>
       <hr>
       <div class="row">
-        <div id="activeGame" class="col-sm-8 text-center">
+        <div id="activeGame" class="col-12 col-sm-8 text-center">
           <div v-if="activeGame">
             <h3><strong>{{activeGame.title}}</strong></h3>
             <h4><span class="badge badge-dark">{{activeGame.competition.name}}</span>
-                <span class="badge badge-dark">{{activeGame.date | formatDate}}</span>
+                <span class="badge badge-warning">{{activeGame.date | formatDate}}</span>
             </h4>
             <hr>
             <div v-html="activeGame.embed">
             </div>
           </div>
         </div>
-        <div id="games" class="col-sm-4 text-left">
+        <div id="games" class="col-12 col-sm-4 text-left">
             <div class="input-group mb-3 box">
               <div class="input-group-prepend">
                 <span class="input-group-text"><font-awesome-icon :icon="['far', 'futbol']" size="lg"/></span>
@@ -34,9 +31,11 @@
         </div>    
       </div>
       <hr>
-      <div id="footer">
-      © 2020 - vong labs 
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/vonglabs"><font-awesome-icon :icon="['fab', 'github-alt']" size="lg"/></a>
+      <div id="footer" class="row">
+        <div class="col-12 col-sm-12 text-right">
+        © 2020 - vong labs 
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/vonglabs"><font-awesome-icon :icon="['fab', 'github-alt']" size="lg"/></a>
+        </div>
       </div>
   </div>
   

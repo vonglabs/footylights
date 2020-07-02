@@ -1,18 +1,77 @@
 <template>
-  <div id="app">
-    <h1>Footylights</h1>
-    <Highlights/>
+  <div id="app" class="container">
+      <div class="row">
+        <div class="col-sm-11">
+          <h1><strong>Footylights</strong></h1>
+        </div>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-dark text-right"><font-awesome-icon :icon="['far', 'envelope']"/></button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div id="activeGame" class="col-sm-8 text-center">
+          <div v-if="activeGame">
+            <h3><strong>{{activeGame.title}}</strong></h3>
+            <h4><span class="badge badge-dark">{{activeGame.competition.name}}</span>
+                <span class="badge badge-dark">{{activeGame.date | formatDate}}</span>
+            </h4>
+            <hr>
+            <div v-html="activeGame.embed">
+            </div>
+          </div>
+        </div>
+        <div id="games" class="col-sm-4 text-left box">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><font-awesome-icon :icon="['far', 'futbol']" size="lg"/></span>
+              </div>
+              <input type="text" v-model="team" class="form-control" placeholder="Search for a team">
+            </div>
+            <Game v-for="game in games" v-on:setActive="setActive" :key="game.title" :game="game"/>
+        </div>    
+      </div>
+      <hr>
+      <div id="footer">
+      © 2020 - vong labs 
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/vonglabs"><font-awesome-icon :icon="['fab', 'github-alt']" size="lg"/></a>
+      </div>
   </div>
+  
 </template>
 
 <script>
-import Highlights from './components/Highlights.vue'
+import Game from './components/Game.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
-    Highlights
-  }
+    Game
+  },
+  data () {
+    return {
+      games: [],
+      team: null,
+      activeGame: null
+    }
+  },
+  mounted () {
+    axios
+      .get('https://www.scorebat.com/video-api/v1/')
+      .then(response => (this.games = response.data.map(game => 
+        {
+          game.active = false;
+          return game;
+        }
+      )));
+  },
+  methods: {
+    setActive: function (game) {
+      this.activeGame = game;
+      window.scrollTo(0,0);
+    }
+  } 
 }
 </script>
 
@@ -23,6 +82,48 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 40px;
+}
+
+.box {
+  padding: 15px;
+  background-color: #e6fff2;
+  -moz-border-radius-topleft: 20px;
+  -moz-border-radius-topright: 20px;
+  -moz-border-radius-bottomright: 20px;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-radius: 20px 20px 20px 20px;
+  border-radius: 20px 20px 20px 20px;
+}
+
+.container {
+  margin: 40px;
+}
+
+.badge {
+  margin: 4px;
+}
+
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: red;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: pink;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+#footer {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: right;
+  color: #2c3e50;
 }
 </style>

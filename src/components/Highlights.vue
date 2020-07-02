@@ -49,7 +49,7 @@ export default {
   max-width: 60%;
 }
 span {
-  padding: 5px;
+  padding: 10px;
 }
 span:hover {
   cursor: pointer;

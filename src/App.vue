@@ -21,14 +21,16 @@
             </div>
           </div>
         </div>
-        <div id="games" class="col-sm-4 text-left box">
-            <div class="input-group mb-3">
+        <div id="games" class="col-sm-4 text-left">
+            <div class="input-group mb-3 box">
               <div class="input-group-prepend">
                 <span class="input-group-text"><font-awesome-icon :icon="['far', 'futbol']" size="lg"/></span>
               </div>
-              <input type="text" v-model="team" class="form-control" placeholder="Search for a team">
+              <input type="text" v-model="searchedTeam" class="form-control" placeholder="Search for a team">
             </div>
-            <Game v-for="game in games" v-on:setActive="setActive" :key="game.title" :game="game"/>
+            <div class="box">
+            <Game v-for="game in filteredGames" v-on:setActive="setActive" :key="game.title" :game="game"/>
+            </div>
         </div>    
       </div>
       <hr>
@@ -51,8 +53,8 @@ export default {
   },
   data () {
     return {
+      searchedTeam: '',
       games: [],
-      team: null,
       activeGame: null
     }
   },
@@ -70,6 +72,15 @@ export default {
     setActive: function (game) {
       this.activeGame = game;
       window.scrollTo(0,0);
+    },
+    getLeagues: function () {
+			return [...new Set(this.games.map(g => g.competition))];
+    }
+  },
+  computed: {
+    filteredGames() {
+      if (!this.searchedTeam) return this.games
+      return this.games.filter(g => g.title.toLowerCase().includes(this.searchedTeam.toLowerCase()));
     }
   } 
 }

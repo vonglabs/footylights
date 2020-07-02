@@ -4,9 +4,10 @@
   <span @click="$emit('setActive', game)" 
         @mouseover="hovering = true" 
         @mouseout="hovering = false">{{game.title}}</span>
+  <span v-if="hovering" class="badge badge-warning">{{game.date | formatDate}}</span>
   </div>
   <div class="col-sm-12" v-if="hovering">
-  <span class="badge badge-dark">{{game.competition.name}} - {{game.date | formatDate}}</span>
+  <span class="badge badge-dark">{{game.competition.name}}</span>
   </div>
 </div>
 </template>

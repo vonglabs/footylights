@@ -86,6 +86,13 @@ export default {
 </script>
 
 <style>
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -106,7 +113,8 @@ export default {
 }
 
 .container {
-  margin: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .badge {

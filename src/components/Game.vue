@@ -3,8 +3,10 @@
   <div class="col-sm-12">
   <span @click="$emit('setActive', game)" 
         @mouseover="hovering = true" 
-        @mouseout="hovering = false">{{game.title}}</span>
-  <span v-if="hovering" class="badge badge-warning">{{game.date | formatDate}}</span>
+        @mouseout="hovering = false"
+        :class="{ 'font-weight-bold' : game === activeGame }">{{game.title}} 
+  <font-awesome-icon :icon="['far', 'check-circle']" v-if="game === activeGame"/> 
+  <span v-if="hovering" class="badge badge-light">{{game.date | formatDate}}</span></span>
   </div>
   <div class="col-sm-12" v-if="hovering">
   <span class="badge badge-dark">{{game.competition.name}}</span>
@@ -15,7 +17,7 @@
 <script>
 export default {
   name: 'Game',
-  props: ['game'],
+  props: ['game', 'activeGame'],
   data: function() {
     return {
       hovering: false
@@ -32,7 +34,7 @@ export default {
 }
 span {
   padding: 4px;
-  margin: 6px;
+  margin: 4px;
 }
 span:hover {
   cursor: pointer;

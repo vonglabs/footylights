@@ -26,7 +26,7 @@
               <input type="text" v-model="searchedTeam" class="form-control" placeholder="Search for a team">
             </div>
             <div class="box">
-            <Game v-for="game in filteredGames" v-on:setActive="setActive" :key="game.title" :game="game"/>
+            <Game v-for="game in filteredGames" v-on:setActive="setActive" :key="game.title" :game="game" :activeGame="activeGame"/>
             </div>
         </div>    
       </div>

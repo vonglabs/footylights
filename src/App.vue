@@ -27,6 +27,7 @@
             </div>
             <div class="box">
             <Game v-for="game in filteredGames" v-on:setActive="setActive" :key="game.title" :game="game" :activeGame="activeGame"/>
+            <span v-if="error">Impossible de charger les matchs</span>
             </div>
         </div>    
       </div>
@@ -54,7 +55,8 @@ export default {
     return {
       searchedTeam: '',
       games: [],
-      activeGame: null
+      activeGame: null,
+      error: false
     }
   },
   mounted () {
@@ -65,7 +67,11 @@ export default {
           game.active = false;
           return game;
         }
-      )));
+      )))
+      .catch(e => {
+          this.error = true;
+          console.log(e);
+        });
   },
   methods: {
     setActive: function (game) {
